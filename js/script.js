@@ -190,3 +190,30 @@ function generateAuthors(){
   }
 }
 generateAuthors();
+
+function authorClickHandler(event){
+  event.preventDefault();
+  const clickedElement = this;
+  console.log(clickedElement);
+  const href = clickedElement.getAttribute('href');
+  const tagAuthor = href.replace('#author-', '');
+  const tagAuthorLinks = document.querySelectorAll('a.active[href^="#author-"]');
+  console.log(tagAuthorLinks);
+  for (let AuthorLink of tagAuthorLinks){
+    AuthorLink.classList.remove('active');
+  }
+  const TagAuthorsHref = document.querySelectorAll('[href^="#author-"]');
+  for (let AuthorHref of TagAuthorsHref){
+    AuthorHref.classList.add('active');
+    console.log("Active: ", clickedElement);
+  }
+  generateTitleLinks('[data-author="' + tagAuthor + '"]');
+}
+
+function addClickListenersToAuthors(){
+  const LinkAuthors = document.querySelectorAll('[href^="#author-"]');
+  for (let link of LinkAuthors){
+    link.addEventListener('click', authorClickHandler);
+  }
+}
+addClickListenersToAuthors();
