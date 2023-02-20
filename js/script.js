@@ -175,3 +175,18 @@ function addClickListenersToTags(){
   /* END LOOP: for each link */
 }
 addClickListenersToTags();
+
+const optArticleAuthorSelector = '.post .post-author';
+
+function generateAuthors(){
+  const articles = document.querySelectorAll(optArticleSelector);
+  for (let article of articles){
+    const authorList = article.querySelector(optArticleAuthorSelector);
+    console.log(authorList);
+    const AuthorName = article.getAttribute('data-author');
+    console.log(AuthorName);
+    const AuthorHTML = '<p class="post-author"><a href="#author-' + AuthorName + '"><span>'+ AuthorName +'</span></a></p>';
+    authorList.innerHTML = AuthorHTML;
+  }
+}
+generateAuthors();
