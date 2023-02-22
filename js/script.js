@@ -1,3 +1,9 @@
+const templates = {
+  articleLink: Handlebars.compile(document.querySelector('#template-article-link').innerHTML),
+  articleTag: Handlebars.compile(document.querySelector('#template-article-tag').innerHTML),
+  articleAuthor: Handlebars.compile(document.querySelector('#template-article-author').innerHTML)
+}
+
 'use strict';
 const titleClickHandler = function(event){
   event.preventDefault();
@@ -85,7 +91,8 @@ function generateTitleLinks(customSelector = ''){
 
       /* create HTML of the link */
 
-    const linkHTML = '<li><a href="#'+ articleId +'"><span>'+ articleTitle +'</span></a></li>';
+    const linkHTMLData = {id: articleId, title: articleTitle};
+    const linkHTML = templates.articleLink(linkHTMLData);
     console.log(linkHTML);
 
       /* insert link into titleList */
@@ -154,7 +161,8 @@ function generateTags(){
     /* START LOOP: for each tag */
     for (let tag of articleTagsArray){
       /* generate HTML of the link */
-      const tagHTML = '<li><a href="#tag-'+ tag +'"><span>'+ tag +'</span></a></li>';
+      const tagHTMLData = {id: tag, title: tag};
+      const tagHTML = templates.articleTag(tagHTMLData);
       console.log(tagHTML);
       /* add generated code to html variable */
       html = html + tagHTML;
@@ -242,7 +250,8 @@ function generateAuthors(){
     console.log(authorList);
     const AuthorName = article.getAttribute('data-author');
     console.log(AuthorName);
-    const AuthorHTML = '<p class="post-author"><a href="#author-'+ AuthorName +'"><span>'+ AuthorName +'</span></a></p>';
+    const AuthorHTMLData = {id: AuthorName, title: AuthorName};
+    const AuthorHTML = templates.articleAuthor(AuthorHTMLData);
     authorList.innerHTML = AuthorHTML;
     if(allAuthors.indexOf(AuthorHTML) == -1){
       allAuthors.push(AuthorHTML);
